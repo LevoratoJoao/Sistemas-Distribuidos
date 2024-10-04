@@ -1,5 +1,3 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -137,7 +135,18 @@ public class Servidor {
 
 			// Recebimento do valor inteiro
 			String valor = entrada.readUTF();
-			System.out.println(valor);
+			Pattern pattern = Pattern.compile("\"method\":\"([^\"]+)\",\\s*\"args\":\\[(.*?)\\]");
+        	Matcher matcher = pattern.matcher(valor);
+
+			if (matcher.find()) {
+				String method = matcher.group(1);
+				String arguments = matcher.group(2);
+
+				System.out.println("Method: " + method);
+				System.out.println("Args: " + arguments);
+			} else {
+				System.out.println("Pattern not found");
+			}
 
 //			// Processamento do valor
 //			String resultado = "";

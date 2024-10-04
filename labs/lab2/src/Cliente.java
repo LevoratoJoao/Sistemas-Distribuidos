@@ -8,10 +8,8 @@
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 public class Cliente {
     public final static Path path = Paths.get("src/fortune-br.txt");
@@ -31,6 +29,7 @@ public class Cliente {
         jsonBuilder.append("\"]\n}");
         return jsonBuilder;
     }
+
     public void menu(DataInputStream entrada, DataOutputStream saida) {
         while (true) {
             try {
@@ -66,16 +65,11 @@ public class Cliente {
                                 message.append(line);
                                 // nLine++;
                             }
+                            stdin.close();
                         } catch (IOException e) {
                             System.out.println("Error reading the message: " + e.getMessage());
                         }
-
-                        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                            bufferedWriter.write("\n\n" + message + "\n%");
-                        } catch (IOException e) {
-                            System.out.println("Error appending to file: " + e.getMessage());
-                        }
-                        saida.writeUTF(String.valueOf(message));
+                        saida.writeUTF(String.valueOf(buildJson("write", new String[]{String.valueOf(message)})));
                         break;
                     case 3:
                         return;

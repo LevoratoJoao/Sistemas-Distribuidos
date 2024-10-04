@@ -22,6 +22,15 @@ public class Cliente {
     
     private int porta=1025;
 
+    private StringBuilder buildJson(String method, String[] args) {
+        StringBuilder jsonBuilder = new StringBuilder();
+        jsonBuilder.append("{\n\"method\":\"" + method + "\",\n\"args\":[\"");
+        for (int i = 0; i < args.length; i++) {
+            jsonBuilder.append(args[i]);
+        }
+        jsonBuilder.append("\"]\n}");
+        return jsonBuilder;
+    }
     public void menu(DataInputStream entrada, DataOutputStream saida) {
         while (true) {
             try {
@@ -33,6 +42,7 @@ public class Cliente {
                     case 1:
                         //Recebe-se o resultado do servidor
                         System.out.println("Leitura");
+                        saida.writeUTF(String.valueOf(buildJson("read", new String[]{""})));
 
                         String resultado = entrada.readUTF();
 
@@ -42,7 +52,7 @@ public class Cliente {
                     case 2:
                         //O valor eh enviado ao servidor
                         System.out.println("Escreva sua nova mensagem: ");
-                        StringBuffer message = new StringBuffer();
+                        StringBuilder message = new StringBuilder();
                         //int nLine = 0;
                         try (BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))) {
                             String line = null;
@@ -91,19 +101,19 @@ public class Cliente {
             
             //Recebe do usuario algum valor
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Digite um numero: ");
-            int valor = Integer.parseInt(br.readLine());
+//            System.out.println("Digite um numero: ");
+//            int valor = Integer.parseInt(br.readLine());
 
             menu(entrada, saida);
 
-            //O valor eh enviado ao servidor
-            saida.writeInt(valor);
-            
-            //Recebe-se o resultado do servidor
-            String resultado = entrada.readUTF();
-            
-            //Mostra o resultado na tela
-            System.out.println(resultado);
+//            //O valor eh enviado ao servidor
+//            saida.writeInt(valor);
+//
+//            //Recebe-se o resultado do servidor
+//            String resultado = entrada.readUTF();
+//
+//            //Mostra o resultado na tela
+//            System.out.println(resultado);
             
             socket.close();
             

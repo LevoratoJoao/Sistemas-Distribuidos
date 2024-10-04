@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Servidor {
 
@@ -134,18 +136,18 @@ public class Servidor {
 			saida = new DataOutputStream(socket.getOutputStream());
 
 			// Recebimento do valor inteiro
-			int valor = entrada.readInt();
+			String valor = entrada.readUTF();
 			System.out.println(valor);
 
-			// Processamento do valor
-			String resultado = "";
-			if (valor > 0)
-				resultado = "O valor enviado eh maior que 0";
-			else
-				resultado = "O valor enviado eh menor que 0";
+//			// Processamento do valor
+//			String resultado = "";
+//			if (valor > 0)
+//				resultado = "O valor enviado eh maior que 0";
+//			else
+//				resultado = "O valor enviado eh menor que 0";
 
 			// Envio dos dados (resultado)
-			saida.writeUTF(resultado);
+//			saida.writeUTF(resultado);
 
 			socket.close();
 

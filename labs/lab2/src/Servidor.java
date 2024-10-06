@@ -130,11 +130,12 @@ public class Servidor {
 			entrada = new DataInputStream(socket.getInputStream());
 			saida = new DataOutputStream(socket.getOutputStream());
 
-			while (true) {
+			int i = 1;
+			while (i != 3) {
 				// Recebimento do valor inteiro
 				String valor = entrada.readUTF();
 				String[] json = extractJson(valor);
-				
+
 				HashMap hm = new HashMap<Integer, String>();
 				FileReader fr = new FileReader();
 				NUM_FORTUNES = fr.countFortunes();
@@ -153,16 +154,18 @@ public class Servidor {
 						System.out.println("Write method");
 						System.out.println(json[1]);
 						String resultado = fr.write(hm, json[1]);
+						System.out.println(resultado);
 						saida.writeUTF(resultado);
 						break;
 					case "exit":
-						socket.close();	
+						socket.close();
 					break;
-				
+
 					default:
 						System.out.println("Invalid option");
 						break;
 				}
+				i++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

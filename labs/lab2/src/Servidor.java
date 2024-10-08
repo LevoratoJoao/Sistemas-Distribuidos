@@ -35,7 +35,6 @@ public class Servidor {
 
 				} // fim while
 
-				//System.out.println(lineCount);
 			} catch (IOException e) {
 				System.out.println("SHOW: Excecao na leitura do arquivo.");
 			}
@@ -61,13 +60,10 @@ public class Servidor {
 					while (!(line == null) && !line.equals("%")) {
 						fortune.append(line + "\n");
 						line = br.readLine();
-						// System.out.print(lineCount + ".");
 					}
 
 					hm.put(lineCount, fortune.toString());
-					// System.out.println(fortune.toString());
 
-					// System.out.println(lineCount);
 				} // fim while
 
 			} catch (IOException e) {
@@ -81,16 +77,14 @@ public class Servidor {
 			return hm.get(new Random().nextInt(NUM_FORTUNES));
 		}
 
-		public String write(HashMap<Integer, String> hm, String message) {
+		public void write(HashMap<Integer, String> hm, String message) {
 
 			// SEU CODIGO AQUI
 			try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
 				bufferedWriter.write("\n\n" + message + "\n%");
-				return "Mensagem \"" + message + "\" escrita com sucesso\n";
 			} catch (IOException e) {
 				System.out.println("Error appending to file: " + e.getMessage());
 			}
-			return "Não foi possivel escrever a mensagem";
 		}
 	}
 
@@ -118,6 +112,12 @@ public class Servidor {
 		return new String[] {};
 	}
 
+	private StringBuilder buildJson(String message) {
+        StringBuilder jsonBuilder = new StringBuilder();
+        jsonBuilder.append("{\n\"result\":\"" + message + "\"\n}");
+        return jsonBuilder;
+    }
+
 	public void iniciar() {
 		System.out.println("Servidor iniciado na porta: " + porta);
 		try {
@@ -130,10 +130,10 @@ public class Servidor {
 			entrada = new DataInputStream(socket.getInputStream());
 			saida = new DataOutputStream(socket.getOutputStream());
 
-			int i = 1;
-			while (i != 3) {
+			while (true) {
 				// Recebimento do valor inteiro
 				String valor = entrada.readUTF();
+				System.out.println(valor);
 				String[] json = extractJson(valor);
 
 				HashMap hm = new HashMap<Integer, String>();
@@ -145,27 +145,26 @@ public class Servidor {
 					case "read":
 						try {
 							String resultado = fr.read(hm);
-							saida.writeUTF(resultado);
+							saida.writeUTF(String.valueOf(buildJson(resultado)));
 						} catch (FileNotFoundException e) {
 							e.printStackTrace();
 						}
 						break;
 					case "write":
-						System.out.println("Write method");
-						System.out.println(json[1]);
-						String resultado = fr.write(hm, json[1]);
-						System.out.println(resultado);
-						saida.writeUTF(resultado);
+						json[1] = json[1].split("\"")[1];
+						fr.write(hm, json[1]);
+						saida.writeUTF(String.valueOf(buildJson(json[1])));
 						break;
 					case "exit":
+						entrada.close();
+						saida.close();
 						socket.close();
-					break;
+						return;
 
 					default:
-						System.out.println("Invalid option");
+						saida.writeUTF("{\n\"result\":\"false\"\n}");
 						break;
 				}
-				i++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

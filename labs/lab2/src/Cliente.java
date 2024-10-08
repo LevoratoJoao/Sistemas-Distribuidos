@@ -30,12 +30,10 @@ public class Cliente {
         return jsonBuilder;
     }
 
-    public void menu(DataInputStream entrada, DataOutputStream saida) {
-        int i = 1;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public void menu(DataInputStream entrada, DataOutputStream saida, BufferedReader br) {
         String resultado = "";
 
-        while (i!=3) {
+        while (true) {
             try {
                 //Recebe do usuario algum valor
                 System.out.println("Escolha uma das opcoes:\n1 - Leitura\n2 - Escrita\n3 - Sair");
@@ -80,6 +78,7 @@ public class Cliente {
                         System.out.println(resultado);
                         break;
                     case 3:
+                        saida.writeUTF(String.valueOf(buildJson("exit", new String[]{})));
                         return;
                     default:
                         System.out.println("Opcao invalida");
@@ -88,7 +87,6 @@ public class Cliente {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-            i++;
         }
     }
 
@@ -104,19 +102,8 @@ public class Cliente {
 
             //Recebe do usuario algum valor
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//            System.out.println("Digite um numero: ");
-//            int valor = Integer.parseInt(br.readLine());
 
-            menu(entrada, saida);
-
-//            //O valor eh enviado ao servidor
-//            saida.writeInt(valor);
-//
-//            //Recebe-se o resultado do servidor
-//            String resultado = entrada.readUTF();
-//
-//            //Mostra o resultado na tela
-//            System.out.println(resultado);
+            menu(entrada, saida, br);
 
             socket.close();
 
@@ -128,5 +115,4 @@ public class Cliente {
     public static void main(String[] args) {
         new Cliente().iniciar();
     }
-
 }

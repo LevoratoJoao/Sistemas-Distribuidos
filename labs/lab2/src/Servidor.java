@@ -118,22 +118,22 @@ public class Servidor {
         return jsonBuilder;
     }
 
-	public void iniciar() {
-		System.out.println("Servidor iniciado na porta: " + porta);
+	private void menu() {
 		try {
-
-			// Criar porta de recepcao
-			server = new ServerSocket(porta);
-			socket = server.accept();  //Processo fica bloqueado, ah espera de conexoes
-
 			// Criar os fluxos de entrada e saida
 			entrada = new DataInputStream(socket.getInputStream());
 			saida = new DataOutputStream(socket.getOutputStream());
-
-			while (true) {
+			while (socket.isConnected()) {
 				// Recebimento do valor inteiro
 				String valor = entrada.readUTF();
+				
 				System.out.println(valor);
+				if (valor.equals("")) {
+					entrada.close();
+					saida.close();
+					socket.close();
+					break;
+				}
 				String[] json = extractJson(valor);
 
 				HashMap hm = new HashMap<Integer, String>();
@@ -155,18 +155,27 @@ public class Servidor {
 						fr.write(hm, json[1]);
 						saida.writeUTF(String.valueOf(buildJson(json[1])));
 						break;
-					case "exit":
-						entrada.close();
-						saida.close();
-						socket.close();
-						return;
-
 					default:
 						saida.writeUTF("{\n\"result\":\"false\"\n}");
 						break;
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void iniciar() {
+		System.out.println("Servidor iniciado na porta: " + porta);
+		// Criar porta de recepcao
+		try {
+			server = new ServerSocket(porta);
+			while (true) {
+				socket = server.accept();  //Processo fica bloqueado, ah espera de conexoes
+				menu();
+			}
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

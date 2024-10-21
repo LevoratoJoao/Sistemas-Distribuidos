@@ -54,21 +54,13 @@ public class Cliente {
                         //O valor eh enviado ao servidor
                         System.out.println("Escreva sua nova mensagem: ");
                         StringBuilder message = new StringBuilder();
-                        //int nLine = 0;
                         try {
                             String line = null;
                             while ((line = br.readLine()) != null && !line.isEmpty()){
-                                // if (nLine > 0) {
-                                // 	System.out.println("Autor: ");
-                                // 	message.append("\n");
-                                // 	message.append(stdin.readLine());
-                                // 	break;
-                                // }
                                 message.append(line);
-                                // nLine++;
                             }
                         } catch (IOException e) {
-                            System.out.println("Error reading the message: " + e.getMessage());
+                            System.out.println("Erro ao ler a mensagem: " + e.getMessage());
                         }
                         saida.writeUTF(String.valueOf(buildJson("write", new String[]{String.valueOf(message)})));
 
@@ -78,7 +70,7 @@ public class Cliente {
                         System.out.println(resultado);
                         break;
                     case 3:
-                        saida.writeUTF(String.valueOf(buildJson("exit", new String[]{})));
+                        saida.writeUTF(String.valueOf(""));
                         return;
                     default:
                         System.out.println("Opcao invalida");

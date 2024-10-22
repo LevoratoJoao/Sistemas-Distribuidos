@@ -133,32 +133,33 @@ public class Servidor {
 					saida.close();
 					socket.close();
 					break;
-				}
-				String[] json = extractJson(valor);
+				} else {
+					String[] json = extractJson(valor);
 
-				HashMap hm = new HashMap<Integer, String>();
-				FileReader fr = new FileReader();
-				NUM_FORTUNES = fr.countFortunes();
-				fr.parser(hm);
-
-				switch (json[0]) {
-					case "read":
-						try {
-							String resultado = fr.read(hm);
-							saida.writeUTF(String.valueOf(buildJson(resultado)));
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						}
-						break;
-					case "write":
-						json[1] = json[1].split("\"")[1];
-						fr.write(hm, json[1]);
-						saida.writeUTF(String.valueOf(buildJson(json[1])));
-						break;
-					default:
-						saida.writeUTF("{\n\"result\":\"false\"\n}");
-						break;
-				}
+					HashMap hm = new HashMap<Integer, String>();
+					FileReader fr = new FileReader();
+					NUM_FORTUNES = fr.countFortunes();
+					fr.parser(hm);
+	
+					switch (json[0]) {
+						case "read":
+							try {
+								String resultado = fr.read(hm);
+								saida.writeUTF(String.valueOf(buildJson(resultado)));
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							}
+							break;
+						case "write":
+							json[1] = json[1].split("\"")[1];
+							fr.write(hm, json[1]);
+							saida.writeUTF(String.valueOf(buildJson(json[1])));
+							break;
+						default:
+							saida.writeUTF("{\n\"result\":\"false\"\n}");
+							break;
+					}
+				}		
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

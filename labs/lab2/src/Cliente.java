@@ -59,7 +59,7 @@ public class Cliente {
                         } catch (IOException e) {
                             System.out.println("Erro ao ler a mensagem: " + e.getMessage());
                         }
-                        saida.writeUTF(String.valueOf(buildJson("write", new String[]{String.valueOf(message)})));
+                        saida.writeUTF(String.valueOf(buildJson("write", new String[]{message})));
 
                         resultado = entrada.readUTF();
 
@@ -67,7 +67,7 @@ public class Cliente {
                         System.out.println(resultado);
                         break;
                     case 3:
-                        saida.writeUTF(String.valueOf(""));
+                        saida.writeUTF("");
                         return;
                     default:
                         System.out.println("Opcao invalida");

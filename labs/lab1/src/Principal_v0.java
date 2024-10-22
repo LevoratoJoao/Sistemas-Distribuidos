@@ -72,9 +72,9 @@ public class Principal_v0 {
 					}
 
 					hm.put(lineCount, fortune.toString());
-					System.out.println(fortune.toString());
+					// System.out.println(fortune.toString());
 
-					System.out.println(lineCount);
+					// System.out.println(lineCount);
 				} // fim while
 
 			} catch (IOException e) {
@@ -92,27 +92,16 @@ public class Principal_v0 {
 
 			// SEU CODIGO AQUI
 			System.out.println("Escreva sua nova mensagem: ");
-			StringBuffer message = new StringBuffer();
-			//int nLine = 0;
+			String line = "";
 			try (BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))) {
-				String line = null;
-				while ((line = stdin.readLine()) != null && !line.isEmpty()){
-					// if (nLine > 0) {
-					// 	System.out.println("Autor: ");
-					// 	message.append("\n");
-					// 	message.append(stdin.readLine());
-					// 	break;
-					// }
-					message.append(line);
-					// nLine++;
-				}
+				line = stdin.readLine();
 				stdin.close();
 			} catch (IOException e) {
 				System.out.println("Error reading the message: " + e.getMessage());
 			}
 
 			try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            	bufferedWriter.write("\n\n" + message + "\n%");
+            	bufferedWriter.write("\n\n" + line + "\n%");
         	} catch (IOException e) {
             	System.out.println("Error appending to file: " + e.getMessage());
         	}

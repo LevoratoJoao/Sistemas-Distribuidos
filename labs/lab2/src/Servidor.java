@@ -114,7 +114,7 @@ public class Servidor {
 
 	private StringBuilder buildJson(String message) {
         StringBuilder jsonBuilder = new StringBuilder();
-        jsonBuilder.append("{\n\"result\":\"" + message + "\"\n}");
+        jsonBuilder.append("{\n\"result\":\"" + message + "\n\"\n}");
         return jsonBuilder;
     }
 
@@ -126,7 +126,7 @@ public class Servidor {
 			while (socket.isConnected()) {
 				// Recebimento do valor inteiro
 				String valor = entrada.readUTF();
-				
+
 				System.out.println(valor);
 				if (valor.equals("")) {
 					entrada.close();

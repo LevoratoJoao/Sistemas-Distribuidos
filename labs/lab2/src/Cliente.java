@@ -53,12 +53,9 @@ public class Cliente {
                     case 2:
                         //O valor eh enviado ao servidor
                         System.out.println("Escreva sua nova mensagem: ");
-                        StringBuilder message = new StringBuilder();
+                        String message = "";
                         try {
-                            String line = null;
-                            while ((line = br.readLine()) != null && !line.isEmpty()){
-                                message.append(line);
-                            }
+                            message = br.readLine();
                         } catch (IOException e) {
                             System.out.println("Erro ao ler a mensagem: " + e.getMessage());
                         }

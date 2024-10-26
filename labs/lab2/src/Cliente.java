@@ -2,8 +2,8 @@
 /**
  * Laboratorio 1 de Sistemas Distribuidos
  *
- * Autor: Lucio A. Rocha
- * Ultima atualizacao: 17/12/2022
+ * Autor: Joâo Vitor Levorato de Souza e Eduardo Yuji Yoshida Yamada
+ * Ultima atualizacao: 25/10/2024
  */
 
 import java.io.*;

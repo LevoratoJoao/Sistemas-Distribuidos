@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 public class ClienteRMI {
 
-	public void iniciarCliente(){
+	public void iniciarCliente(PeerLista peerEscolhido){
 
 		List<PeerLista> listaPeers = new ArrayList<PeerLista>();
         for( PeerLista peer : PeerLista.values())
@@ -31,24 +31,24 @@ public class ClienteRMI {
 
 
         	//Escolhe um peer aleatorio da lista de peers para conectar
-            SecureRandom sr = new SecureRandom();
+            //SecureRandom sr = new SecureRandom();
 
             IMensagem stub = null;
-            PeerLista peer = null;
+            //PeerLista peer = null;
 
     		boolean conectou=false;
     		while(!conectou){
-    			peer = listaPeers.get(sr.nextInt(listaPeers.size()));
+    			//peer = listaPeers.get(sr.nextInt(listaPeers.size()));
     			try{
-    				stub = (IMensagem) registro.lookup(peer.getNome());
+    				stub = (IMensagem) registro.lookup(peerEscolhido.getNome());
     				conectou=true;
     			} catch(java.rmi.ConnectException e){
-    				System.out.println("\n"+peer.getNome() + " indisponivel. ConnectException. Tentanto o proximo...");
+    				System.out.println("\n"+peerEscolhido.getNome() + " indisponivel. ConnectException. Tentanto o proximo...");
     			} catch(java.rmi.NotBoundException e){
-    				System.out.println("\n"+peer.getNome() + " indisponivel. NotBoundException. Tentanto o proximo...");
+    				System.out.println("\n"+peerEscolhido.getNome() + " indisponivel. NotBoundException. Tentanto o proximo...");
     			}
     		}
-            System.out.println("Conectado no peer: " + peer.getNome());
+            System.out.println("Conectado no peer: " + peerEscolhido.getNome());
 
 
             String opcao="";

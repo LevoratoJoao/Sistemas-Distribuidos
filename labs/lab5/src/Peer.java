@@ -161,7 +161,7 @@ public class Peer implements IMensagem{
             System.out.print(peer.getNome() +" Servidor RMI: Aguardando conexoes...");
 
             //---Cliente RMI
-            new ClienteRMI().iniciarCliente();
+            new ClienteRMI().iniciarCliente(peer);
 
 
 

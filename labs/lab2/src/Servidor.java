@@ -88,7 +88,6 @@ public class Servidor {
 		}
 	}
 
-
 	private static Socket socket;
 	private static ServerSocket server;
 
@@ -112,9 +111,13 @@ public class Servidor {
 		return new String[] {};
 	}
 
-	private StringBuilder buildJson(String message) {
+	private StringBuilder buildJson(String message, boolean isRead) {
         StringBuilder jsonBuilder = new StringBuilder();
-        jsonBuilder.append("{\n\"result\":\"" + message + "\n\"\n}");
+		if (isRead) {
+			jsonBuilder.append("{\n\"result\":\"" + message + "\"\n}");
+		} else {
+			jsonBuilder.append("{\n\"result\":\"" + message + "\n\"\n}");
+		}
         return jsonBuilder;
     }
 
@@ -145,7 +148,7 @@ public class Servidor {
 						case "read":
 							try {
 								String resultado = fr.read(hm);
-								saida.writeUTF(String.valueOf(buildJson(resultado)));
+								saida.writeUTF(String.valueOf(buildJson(resultado, true)));
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
 							}
@@ -153,7 +156,7 @@ public class Servidor {
 						case "write":
 							json[1] = json[1].split("\"")[1];
 							fr.write(hm, json[1]);
-							saida.writeUTF(String.valueOf(buildJson(json[1])));
+							saida.writeUTF(String.valueOf(buildJson(json[1], false)));
 							break;
 						default:
 							saida.writeUTF("{\n\"result\":\"false\"\n}");

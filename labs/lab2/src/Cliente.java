@@ -1,9 +1,14 @@
 
 /**
- * Laboratorio 1 de Sistemas Distribuidos
+ * Laboratorio 2 de Sistemas Distribuidos
  *
+<<<<<<< HEAD
  * Autor: Joâo Vitor Levorato de Souza e Eduardo Yuji Yoshida Yamada
  * Ultima atualizacao: 25/10/2024
+=======
+ * Autor: João Vitor Levorato de Souza
+ * Ultima atualizacao: 22/10/2024
+>>>>>>> 6592c91 (update)
  */
 
 import java.io.*;
@@ -30,6 +35,15 @@ public class Cliente {
         return jsonBuilder;
     }
 
+    public static boolean isNumeric(String str) { 
+        try {  
+          Integer.parseInt(str);  
+          return true;
+        } catch(NumberFormatException e){  
+          return false;  
+        }  
+      }
+
     public void menu(DataInputStream entrada, DataOutputStream saida, BufferedReader br) {
         String resultado = "";
 
@@ -37,8 +51,11 @@ public class Cliente {
             try {
                 //Recebe do usuario algum valor
                 System.out.println("Escolha uma das opcoes:\n1 - Leitura\n2 - Escrita\n3 - Sair");
-                int valor = Integer.parseInt(br.readLine());
-
+                String input = br.readLine();
+                int valor = 0;
+                if (isNumeric(input)) {
+                    valor = Integer.parseInt(input);
+                }
                 switch (valor) {
                     case 1:
                         //Recebe-se o resultado do servidor

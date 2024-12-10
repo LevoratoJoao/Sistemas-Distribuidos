@@ -1,8 +1,8 @@
 /**
  * Lab05: Sistema P2P
  *
- * Autor: Lucio A. Rocha
- * Ultima atualizacao: 22/05/2023
+ * Autor: João Vitor Levorato de Souza, Eduardo Yuji Yoshida Yamada
+ * Ultima atualizacao: 10/12/2024
  *
  * Referencias:
  * https://docs.oracle.com/javase/tutorial/essential/io
@@ -60,11 +60,16 @@ public class Peer implements IMensagem{
 		}
 		System.out.println("Digite o número do PEER que deseja utilizar");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String input = br.readLine();
-        int n = 0;
-        if (isNumeric(input)) {
-            n = Integer.parseInt(input);
-        }
+        int n = -1;
+		while (n < 0 || n > 4) {
+			String input = br.readLine();
+			if (isNumeric(input)) {
+				n = Integer.parseInt(input);
+			}
+			if (n < 0 || n > 4) {
+				System.out.println("Número invalido");
+			}
+		}
 		PeerLista peer = listaPeers.get(n - 1);
 		return peer;
 	}
@@ -161,8 +166,8 @@ public class Peer implements IMensagem{
             System.out.print(peer.getNome() +" Servidor RMI: Aguardando conexoes...");
 
             //---Cliente RMI
-            new ClienteRMI().iniciarCliente(peer);
-
+			new ClienteRMI().iniciarCliente(peer);
+			listaPeers.remove(peer);
 
 
         } catch(Exception e) {
@@ -173,6 +178,6 @@ public class Peer implements IMensagem{
 
     public static void main(String[] args) {
         Peer servidor = new Peer();
-        servidor.iniciar();
+		servidor.iniciar();
     }
 }

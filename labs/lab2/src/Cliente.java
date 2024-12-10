@@ -2,13 +2,8 @@
 /**
  * Laboratorio 2 de Sistemas Distribuidos
  *
-<<<<<<< HEAD
  * Autor: Joâo Vitor Levorato de Souza e Eduardo Yuji Yoshida Yamada
  * Ultima atualizacao: 25/10/2024
-=======
- * Autor: João Vitor Levorato de Souza
- * Ultima atualizacao: 22/10/2024
->>>>>>> 6592c91 (update)
  */
 
 import java.io.*;
@@ -35,13 +30,13 @@ public class Cliente {
         return jsonBuilder;
     }
 
-    public static boolean isNumeric(String str) { 
-        try {  
-          Integer.parseInt(str);  
+    public static boolean isNumeric(String str) {
+        try {
+          Integer.parseInt(str);
           return true;
-        } catch(NumberFormatException e){  
-          return false;  
-        }  
+        } catch(NumberFormatException e){
+          return false;
+        }
       }
 
     public void menu(DataInputStream entrada, DataOutputStream saida, BufferedReader br) {

@@ -128,7 +128,7 @@ public class Peer implements IMensagem{
 
     		SecureRandom sr = new SecureRandom();
 
-    		PeerLista peer = interfaceGrafica(listaPeers);
+			PeerLista peer = interfaceGrafica(listaPeers);
 
     		int tentativas=0;
     		boolean repetido = true;
@@ -168,6 +168,7 @@ public class Peer implements IMensagem{
             //---Cliente RMI
 			new ClienteRMI().iniciarCliente(peer);
 			listaPeers.remove(peer);
+			servidorRegistro.unbind(peer.getNome());
 
 
         } catch(Exception e) {

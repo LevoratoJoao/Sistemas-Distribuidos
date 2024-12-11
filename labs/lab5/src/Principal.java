@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class Principal {
 
-	public final static Path path = Paths.get("/home/joaolevorato/programacao/Sistemas-Distribuidos/labs/lab5/src/fortune-br.txt");
+	public final static Path path = Paths.get("/src/fortune-br.txt");
 	private int NUM_FORTUNES = 0;
 
 	private FileReader fr;

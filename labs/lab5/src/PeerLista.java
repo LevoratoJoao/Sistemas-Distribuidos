@@ -4,6 +4,8 @@
  * Autor: João Vitor Levorato de Souza, Eduardo Yuji Yoshida Yamada
  * Ultima atualizacao: 10/12/2024
  *
+ * Item 1 DONE: Adicionar novo peer a lista de peers
+ *
  * Referencias:
  * https://docs.oracle.com/javase/tutorial/essential/io
  * http://fortunes.cat-v.org/

@@ -4,6 +4,10 @@
  * Autor: João Vitor Levorato de Souza, Eduardo Yuji Yoshida Yamada
  * Ultima atualizacao: 10/12/2024
  *
+ * Item 2 DONE: interface mostrando os peers ativos foi feita na funcao interfaceGrafica(), linha 58
+ * Item 3 DONE: peer desconecta e outro entra no lugar na lista, linha 174
+ * Item 4 DONE: tambem feito dentro da funcao interfaceGrafica(), usuario escolhe o peer (caso ele digite um valor invalido eh solicitado novamente)
+ *
  * Referencias:
  * https://docs.oracle.com/javase/tutorial/essential/io
  * http://fortunes.cat-v.org/
